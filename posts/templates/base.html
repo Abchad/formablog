@@ -1,0 +1,68 @@
+<!-- C:\blog_django\src\templates\base.html (ou un chemin similaire) -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mon Blog Django{% endblock %}</title>
+    <!-- Inclusion de Tailwind CSS (via CDN pour un développement rapide) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* light gray background */
+            color: #374151; /* dark gray text */
+        }
+        .messages li {
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+        }
+        .messages .success {
+            background-color: #d1fae5; /* green-100 */
+            color: #065f46; /* green-700 */
+        }
+        .messages .error {
+            background-color: #fee2e2; /* red-100 */
+            color: #991b1b; /* red-700 */
+        }
+        .messages .warning {
+            background-color: #fffbeb; /* yellow-100 */
+            color: #92400e; /* yellow-700 */
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'core:landing_page' %}" class="text-2xl font-bold text-indigo-400 hover:text-indigo-300">
+                Le Blog Collectif
+            </a>
+            <nav class="space-x-4">
+                <a href="{% url 'posts:home' %}" class="hover:text-indigo-300 transition-colors duration-200">Articles</a>
+                <a href="{% url 'core:contact' %}" class="hover:text-indigo-300 transition-colors duration-200">Contact</a>
+                {% if user.is_authenticated %}
+                    <span class="text-gray-400">Bienvenue, {{ user.username }}!</span>
+                    <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md text-sm transition-colors duration-200">Déconnexion</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md text-sm transition-colors duration-200">Connexion</a>
+                    {# Ajoutez un lien d'inscription si vous avez une vue d'inscription #}
+                    {# <a href="{% url 'register' %}" class="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded-md text-sm transition-colors duration-200">S'inscrire</a> #}
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="py-8">
+        {% block content %}
+        <!-- Le contenu spécifique de chaque page ira ici -->
+        {% endblock %}
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8 text-center text-sm">
+        <p>&copy; 2025 Le Blog Collectif. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

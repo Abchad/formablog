@@ -1,0 +1,24 @@
+# Virtual environment
+.env/
+venv/
+*.pyc
+__pycache__/
+
+# Database
+db.sqlite3 # retrouver le chemi,n postgrsql à ajouter
+
+# Django specific
+*.log
+local_settings.py # Si vous utilisez un fichier de paramètres local
+
+# Secret key
+blog/settings.py
+/.env
+# Ou si vous utilisez une variable d'environnement pour SECRET_KEY, assurez-vous qu'elle n'est pas dans un fichier public
+
+# Collectstatic folder
+#staticfiles/
+
+# OS generated files
+.DS_Store
+.vscode/ # Si vous utilisez VS Code et ne voulez pas partager sa config

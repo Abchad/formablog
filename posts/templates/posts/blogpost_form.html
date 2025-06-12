@@ -1,0 +1,59 @@
+<!-- C:\blog_django\src\posts\templates\posts\blogpost_form.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load posts_tags %} {# Charge vos filtres personnalisés si vous les utilisez pour la logique de formulaire #}
+
+{% block title %}
+    {% if post %}
+        Modifier l'article : {{ post.title }}
+    {% else %}
+        Créer un nouvel article
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto p-4 max-w-2xl bg-white shadow-lg rounded-lg mt-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+            {% if post %}
+                Modifier l'article
+            {% else %}
+                Créer un nouvel article
+            {% endif %}
+        </h1>
+
+        <form method="post" class="space-y-4">
+            {% csrf_token %} {# Très important pour la sécurité #}
+
+            {# Affiche les erreurs globales du formulaire #}
+            {% if form.errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <strong class="font-bold">Oops !</strong>
+                    <span class="block sm:inline">Veuillez corriger les erreurs ci-dessous.</span>
+                    <ul class="mt-2 list-disc list-inside">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {# Affiche les champs du formulaire. 'as_p' les rend comme des paragraphes #}
+            {# Pour un contrôle plus fin, vous pouvez les rendre un par un #}
+            {{ form.as_p }}
+
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+                {% if post %}
+                    Enregistrer les modifications
+                {% else %}
+                    Créer l'article
+                {% endif %}
+            </button>
+            <a href="{% url 'posts:home' %}" class="block text-center mt-4 text-gray-600 hover:underline">Annuler</a>
+        </form>
+    </div>
+{% endblock %}
