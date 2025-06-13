@@ -5,14 +5,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Nouvelle page d'accueil à la racine du site
-    path('', include('core.urls')), # Inclut les URLs de l'application 'core' à la racine
+    
+    path('', include('core.urls')), # Inclut les URLs de l'application 'core' à la racine (abchad.com/blog/)
 
-    # Toutes les URLs du blog (articles, création, édition, etc.) sous le préfixe 'blog/'
-    path('blog/', include('posts.urls')),
+    # Toutes les URLs du blog (articles, création, édition, etc.) sous le nouveau préfixe 'articles/'
+    path('articles/', include('posts.urls')), # CHANGÉ ICI
 
-    # Inclut les URLs d'authentification de Django (login, logout, password_change, reset)
-    # Assurez-vous d'avoir des templates pour ces vues dans un dossier 'registration/' ou 'accounts/'
-    # Par exemple: templates/registration/login.html
     path('accounts/', include('django.contrib.auth.urls')),
 ]
